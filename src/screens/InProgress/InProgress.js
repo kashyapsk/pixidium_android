@@ -79,7 +79,7 @@ getInProcess() {
      
   };
   console.log(requestOptions)
-   fetch("https://dev.pixidium.net/rest/in-progress/", requestOptions)
+   fetch("https://www.pixidium.net/rest/in-progress/", requestOptions)
       .then(response => {
          return response.json()
       }
@@ -110,7 +110,7 @@ getInProcess() {
 
  
     nextPage =(item)=>{
-this.props.navigation.navigate('CampaignPreview',{isFromInProgress:true,camp_id:item.campaign_id})
+this.props.navigation.navigate('CampaignPreview',{isFromInProgress:true,camp_id:item.campaign_id,id:item.id})
     }
 
     render() {

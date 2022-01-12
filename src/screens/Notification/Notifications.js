@@ -12,6 +12,7 @@ import {
 } from '../../Utilities/LocalStorage';
  import SmartLoader from '../Components/SmartLoader';
  import NoDataFound from '../Components/NoDataFound';
+ import ShortcutBadge from 'react-native-app-badge';
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -60,27 +61,34 @@ load = () =>{
           this.state.accessToken !== undefined
         ) {
           this.setState({
-            showLoginBtn: false,
-          });
+            isLoading:true,
+            showLoginBtn:false
+          },()=>{
+            this.getNotifications()
+          })
         } else {
           this.setState({
             showLoginBtn: true,
           });
         }
-        this.getNotifications()
+
       })
     }) 
   }
   else
   {
-    this.getNotifications()
+    this.setState({
+      isLoading:true
+    },()=>{
+      this.getNotifications()
+    })
+   
   }
   
-  this.setState({
-    isLoading:true
-  })
+ 
  
 }
+
 
 componentWillUnmount() {
   // Remove the event listener
@@ -96,7 +104,7 @@ componentWillUnmount() {
          
       };
       console.log(requestOptions)
-       fetch("https://dev.pixidium.net/rest/notifications/", requestOptions)
+       fetch("https://www.pixidium.net/rest/notifications/", requestOptions)
           .then(response => {
              return response.json()
           }
@@ -133,7 +141,7 @@ componentWillUnmount() {
          
       };
       console.log(requestOptions)
-       fetch("https://dev.pixidium.net/rest/api/seen-notifications/", requestOptions)
+       fetch("https://www.pixidium.net/rest/api/seen-notifications/", requestOptions)
           .then(response => {
              return response.json()
           }
@@ -143,7 +151,10 @@ componentWillUnmount() {
               this.setState({
                 isLoading:false
               },()=>{
-                
+                ShortcutBadge.setCount(0).then((result)=>{
+                  console.log('klklk')
+                   console.log(result)
+                 });
                 console.log(responseData)
                  this.props.navigation.setParams({abc:66})
             })       

@@ -12,6 +12,7 @@ import {
 } from '../../Utilities/LocalStorage';
 import SmartLoader from '../Components/SmartLoader';
 import NoDataFound from '../Components/NoDataFound'
+import messaging from '@react-native-firebase/messaging';
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -31,6 +32,7 @@ export default class Dashboard extends Component {
  
   componentDidMount()
   {
+  
     this.load()
     const { navigation } = this.props;
     this.focusListener = navigation.addListener("focus", () => {
@@ -38,7 +40,7 @@ export default class Dashboard extends Component {
       
     });
   
-    
+ 
   }
   
   load = () =>{
@@ -51,12 +53,15 @@ export default class Dashboard extends Component {
         },()=>{
           console.log('yyyyyyyyyy888888 ====  ')
           console.log(token)
+          this.handleNotification()
           this.getDashboard()
               })
       }) 
     }
     else
     {
+      this.handleNotification()
+
       this.getDashboard()
     }
     
@@ -66,6 +71,36 @@ export default class Dashboard extends Component {
     
   }
   
+  handleNotification() {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+      if (this.state.accessToken !== undefined && this.state.accessToken !== '')
+      {
+        this.props.navigation.navigate('Campaigns')
+
+      }
+     });
+
+
+     messaging()
+     .getInitialNotification()
+     .then(remoteMessage => {
+       if (remoteMessage) {
+         console.log(
+           'Notification caused app to open from quit state:',
+           remoteMessage.notification,
+         );
+         if (this.state.accessToken !== undefined && this.state.accessToken !== '')
+         {
+           this.props.navigation.navigate('Campaigns')
+   
+         }
+       }
+      });
+  }
 
 getDashboard() {
 
@@ -76,7 +111,7 @@ getDashboard() {
      
   };
   console.log(requestOptions)
-   fetch("https://dev.pixidium.net/rest/dashboard/", requestOptions)
+   fetch("https://www.pixidium.net/rest/dashboard/", requestOptions)
       .then(response => {
          return response.json()
       }

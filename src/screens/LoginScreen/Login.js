@@ -16,7 +16,7 @@ import TextField from '../Components/TextField';
 import {
   saveUserType,
   getUserType,
-  saveAccessToken,
+  saveAccessToken,getFCMToken
 } from '../../Utilities/LocalStorage';
  import SmartLoader from '../Components/SmartLoader';
 import {loginApi} from '../../NetworkCalls/NetworkCall'
@@ -28,8 +28,23 @@ export default class Login extends Component {
       isLoading: false,
       username: '',
       password: '',
+      fcmtoken:''
+
     };
   }
+
+  componentDidMount()
+  {
+    getFCMToken().then((fcm)=>{
+      this.setState({
+        fcmtoken:fcm
+      },()=>{
+        console.log('tokeee ',this.state.fcmtoken)
+      })
+    })
+  }
+  
+
 
   showNextScreen = isEndUser => {
     console.log('hfhfghf');
@@ -47,7 +62,7 @@ loginApi1= (params)=>{
   };
   console.log('parameters',params)
   console.log(requestOptions);
-  fetch('https://dev.pixidium.net/rest/api/token/', requestOptions)
+  fetch('https://www.pixidium.net/rest/api/token/', requestOptions)
     .then(response => {
       return response.json();
     })
@@ -108,6 +123,8 @@ loginApi1= (params)=>{
     const formData = new FormData();
     formData.append('username', this.state.username);
     formData.append('password', this.state.password);
+    formData.append('fcm_token',this.state.fcmtoken)
+
     this.setState({
       isLoading: true,
     });
