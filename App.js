@@ -12,7 +12,7 @@
   import messaging from '@react-native-firebase/messaging';
  
 
-import {getAccessToken,saveAccessToken} from './src/Utilities/LocalStorage'
+import {getAccessToken,saveFCMToken} from './src/Utilities/LocalStorage'
  
    export default class App extends Component {
  
@@ -24,13 +24,17 @@ import {getAccessToken,saveAccessToken} from './src/Utilities/LocalStorage'
       messaging().getToken()
       .then(fcmToken => {
         console.log("tokkkkk==  ",fcmToken)
-          //alert(fcmToken)
+        saveFCMToken(fcmToken)
+
           
       }).catch(error => {
           let err = `FCm token get error${error}`
          //alert(err)
    })
+   
     }
+
+
 
  
     render() {
