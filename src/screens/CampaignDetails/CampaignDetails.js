@@ -72,8 +72,8 @@ getDetails() {
        
     };
     console.log(requestOptions)
-    console.log("https://dev.pixidium.net/rest/campaign-detail/?id=" + this.props.route.params.campaingn_id)
-     fetch("https://dev.pixidium.net/rest/campaign-detail/?id=" + this.props.route.params.campaingn_id, requestOptions)
+    console.log("https://www.pixidium.net/rest/campaign-detail/?id=" + this.props.route.params.campaingn_id)
+     fetch("https://www.pixidium.net/rest/campaign-detail/?id=" + this.props.route.params.campaingn_id, requestOptions)
         .then(response => {
            return response.json()
         }

@@ -101,7 +101,7 @@ getCampsList() {
      
   };
   console.log(requestOptions)
-   fetch("https://dev.pixidium.net/rest/campaign-listing/?"+this.props.route.params.catStr, requestOptions)
+   fetch("https://www.pixidium.net/rest/campaign-listing/?"+this.props.route.params.catStr, requestOptions)
       .then(response => {
          return response.json()
       }

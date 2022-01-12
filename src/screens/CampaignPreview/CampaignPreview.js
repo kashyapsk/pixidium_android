@@ -8,8 +8,8 @@ import {
   Image,
   Dimensions,
   Animated,
-  FlatList,
-  StatusBar,
+  Clipboard,
+  Share,
   Linking,
   Alert,
 } from 'react-native';
@@ -29,8 +29,7 @@ import SmartLoader from '../Components/SmartLoader';
 import SoundPlayer from 'react-native-sound-player';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import ShowFullImage from '../Components/ShowFullImage';
-import YouTube from 'react-native-youtube';
-
+ 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -66,7 +65,8 @@ export default class CampaignPreview extends Component {
       promotional_video: '',
       youtube_video_link: '',
       youtubePlay: false,
-      boxHeight:40
+      boxHeight:40,
+      shareLink_id:''
     };
     console.log(this.props);
   }
@@ -147,6 +147,34 @@ export default class CampaignPreview extends Component {
     this.timer !== undefined ? clearTimeout(this.timer) : null;
   }
 
+  copyToClipboard = () => {
+    Clipboard.setString(this.state.shareLink_id)
+    alert("Data copied")
+  }
+
+
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+        this.state.shareLink_id,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
   // Subscribe to event(s) you want when component mounted
 
   // Remove all the subscriptions when component will unmount
@@ -196,6 +224,70 @@ export default class CampaignPreview extends Component {
     this.getDetails();
   }
 
+
+  getSharelink(type) {
+    this.setState({
+      isLoading: true,
+    });
+    const formData = new FormData();
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization:
+          this.state.userType === 'ambassdor'
+            ? 'Bearer ' + this.state.accessToken
+            : '',
+      },
+    };
+    console.log(requestOptions);
+    console.log(this.props.route.params.id)
+
+    console.log('https://www.pixidium.net/rest/get-share-link/',this.props.route.params.id)
+    var url =
+      'https://www.pixidium.net/rest/get-share-link/';
+    fetch(url + this.props.route.params.id, requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(responseData => {
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => {
+            console.log(responseData);
+            if (responseData !== undefined && responseData.status === 200) {
+              this.setState(
+                {
+                  shareLink_id: responseData.link,
+                },
+                () => {
+                  console.log('data == ',this.state.shareLink_id);
+                  if (type === '1')
+                  {
+                    this.copyToClipboard()
+                  }
+                  else if (type === '0')
+                  {
+                    this.onShare()
+                  }
+                 },
+              );
+            }
+          },
+        );
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          isLoading: false,
+        });
+      });
+  }
+
+
   getDetails() {
     this.setState({
       isLoading: true,
@@ -215,8 +307,8 @@ export default class CampaignPreview extends Component {
     console.log(requestOptions);
     var url =
       this.state.userType === 'ambassdor'
-        ? 'https://dev.pixidium.net/rest/in-progress-preview/?campaign_id='
-        : 'https://dev.pixidium.net/rest/campaign-preview/?campaign_id=';
+        ? 'https://www.pixidium.net/rest/in-progress-preview/?campaign_id='
+        : 'https://www.pixidium.net/rest/campaign-preview/?campaign_id=';
     fetch(url + this.props.route.params.camp_id, requestOptions)
       .then(response => {
         return response.json();
@@ -343,9 +435,10 @@ export default class CampaignPreview extends Component {
     }
   };
 
-  rowView = (t1, t2, t3, t4, topBorder, t5, t6, index, t7) => {
+  rowView = (indexTitle, title, t3, priceTitle, topBorder, t5, t6, index, t7) => {
     return (
-      <View
+      <TouchableOpacity
+      activeOpacity={1}
         style={{
           ...this.styles.rowViewContainer,
           // borderBottomWidth: 1,
@@ -366,12 +459,12 @@ export default class CampaignPreview extends Component {
           }}>
           <Text
             numberOfLines={1}
-            style={
+            style={{...
               topBorder === 1
                 ? this.styles.rowHeaderTitle
                 : this.styles.rowTitleText
-            }>
-            {t1}
+            }}>
+            {indexTitle}
           </Text>
           {/* <View style={this.styles.separatorVertical}></View> */}
         </View>
@@ -380,23 +473,23 @@ export default class CampaignPreview extends Component {
           <View style={{...this.styles.rowTitleContainer, flex: 1}}>
             <Text
               numberOfLines={1}
-              style={
+              style={{...
                 topBorder === 1
                   ? this.styles.rowHeaderTitle
                   : this.styles.rowTitleText
-              }>
-              {t2}
+              ,paddingHorizontal:10}}>
+              {title}
             </Text>
             {/* <View style={this.styles.separatorVertical}></View> */}
           </View>
           <View style={{...this.styles.rowTitleContainer, flex: 1}}>
             <Text
               numberOfLines={1}
-              style={
+              style={{...
                 topBorder === 1
                   ? this.styles.rowHeaderTitle
                   : this.styles.rowTitleText
-              }>
+              ,paddingHorizontal:10}}>
               {t3}
             </Text>
             {/* <View style={this.styles.separatorVertical}></View> */}
@@ -453,9 +546,9 @@ export default class CampaignPreview extends Component {
                 <Text
                   style={{
                     ...this.styles.rowHeaderTitle,
-                    textDecorationLine: topBorder === 0 ? 'underline' : 'none',
+                    textDecorationLine: topBorder === 0 ? 'underline' : 'none'
                   }}>
-                  {t4}
+                  {priceTitle}
                 </Text>
               </TouchableOpacity>
             ) : (
@@ -522,7 +615,7 @@ export default class CampaignPreview extends Component {
             {/* <View style={this.styles.separatorVertical}></View> */}
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -656,6 +749,11 @@ export default class CampaignPreview extends Component {
     }
     this.setState({
       campaignsArray: tmpArray,
+    },()=>{
+      if (this.state.userType === 'ambassdor')
+      {
+        this.getSharelink()
+      }
     });
   }
 
@@ -819,19 +917,20 @@ export default class CampaignPreview extends Component {
                 }}>
                 <View
                   style={{
-                    height: 34,
+                    height: 30,
                     justifyContent: 'space-between',
                     flexDirection: 'row',
+                    paddingBottom:6
                   }}>
                   <Text
                     numberOfLines={1}
                     style={{
                       fontFamily: CustomeFont.Helvetica,
-                      fontSize: 17,
-                      marginTop: 5,
-                      marginEnd: 15,
+                      fontSize: 15,
+                       marginEnd: 15,
                       marginStart:4,
-                      color:'black'
+                       height:24,
+                       color:'black'
                     }}>
                     {this.state.campaignsDetails.title}
                   </Text>
@@ -1116,18 +1215,18 @@ export default class CampaignPreview extends Component {
                     });
                   }}
                   style={this.styles.videov1}>
-                  <Video
+                   <Image
                     source={{
-                      uri: this.state.campaignsDetails.promotional_video,
+                      uri: this.state.campaignsDetails.promotional_video_thumbnail,
                     }}
-                    style={{width: (width - 60) / 2, height: 120}}
-                    volume={100}
-                    ref={ref => {
-                      this.player2 = ref;
-                    }}
-                    paused={true}
-                    controls={false}
-                    pictureInPicture={true}
+                    style={{
+                      resizeMode:'cover' ,
+                        height: 140,
+                        width: (width - 60) / 2,
+                         
+                      }}
+                      height={120}
+                      width={(width - 60) / 2}
                     resizeMode="contain"
                   />
                   <Image
@@ -1159,17 +1258,14 @@ export default class CampaignPreview extends Component {
                   
                   style={{...this.styles.videov1}}>
                   
-                  <YouTube
-                    videoId={this.state.campaignsDetails.youtube_video_link.substring(
-                      this.state.campaignsDetails.youtube_video_link.lastIndexOf(
-                        '/',
-                      ) + 1,
-                      this.state.campaignsDetails.youtube_video_link.length,
-                    )}
-                    play={false}
-                  
+                  <Image
+                    source={{
+                      uri:this.state.campaignsDetails.youtube_video_link_thumbnail}}
+                   height={120}
+                   width={(width - 60) / 2}
+                   
                     style={{
-                      alignSelf: 'stretch',
+                    resizeMode:'cover' ,
                       height: 120,
                       width: (width - 60) / 2,
                     }}
@@ -1317,6 +1413,48 @@ export default class CampaignPreview extends Component {
                     }}>
                     <Image
                       source={images.instagram}
+                      style={this.styles.socialImage}
+                      width={15}
+                      height={15}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    style={this.styles.socialButton}
+                    onPress={() => {
+                      if (this.state.shareLink_id === '')
+                      {
+                        this.getSharelink('0')
+                      }
+                      else
+                      {
+                        this.onShare()
+                      }
+                    }}>
+                    <Image
+                      source={images.share}
+                      style={this.styles.socialImage}
+                      width={15}
+                      height={15}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    style={this.styles.socialButton}
+                    onPress={() => {
+                      if (this.state.shareLink_id === '')
+                      {
+                        this.getSharelink('1')
+                      }
+                      else
+                      {
+                      this.copyToClipboard()
+                      }
+                    }}>
+                    <Image
+                      source={images.clip_board}
                       style={this.styles.socialImage}
                       width={15}
                       height={15}

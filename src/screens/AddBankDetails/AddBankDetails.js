@@ -103,7 +103,7 @@ addBankDetailsApi(){
       body: formData,
     };
     console.log(requestOptions);
-    fetch('https://dev.pixidium.net/rest/api/add-bank-details/', requestOptions)
+    fetch('https://www.pixidium.net/rest/api/add-bank-details/', requestOptions)
       .then(response => {
         return response.json();
       })
