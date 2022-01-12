@@ -50,7 +50,7 @@ export default class ForgotPassword extends Component {
           body: formData,
         };
         console.log(requestOptions);
-        fetch('https://dev.pixidium.net/rest/api/forget-password/', requestOptions)
+        fetch('https://www.pixidium.net/rest/api/forget-password/', requestOptions)
           .then(response => {
             return response.json();
           })

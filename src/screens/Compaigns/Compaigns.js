@@ -95,7 +95,7 @@ getCampaingns() {
      
   };
   console.log(requestOptions)
-   var url = this.state.userType === 'ambassdor' ? 'https://dev.pixidium.net/rest/campaigns-to-allocate/' : "https://dev.pixidium.net/rest/campaigns/"
+   var url = this.state.userType === 'ambassdor' ? 'https://www.pixidium.net/rest/campaigns-to-allocate/' : "https://www.pixidium.net/rest/campaigns/"
    console.log(url)
    fetch(url, requestOptions)
       .then(response => {
@@ -144,7 +144,7 @@ getCampaingns() {
       body: formData,
     };
     console.log(requestOptions);
-    fetch('https://dev.pixidium.net/rest/accept-campaign/', requestOptions)
+    fetch('https://www.pixidium.net/rest/accept-campaign/', requestOptions)
       .then(response => {
         return response.json();
       })

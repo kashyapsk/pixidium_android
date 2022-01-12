@@ -133,7 +133,7 @@ getCatArray() {
      
   };
   console.log(requestOptions)
-   fetch("https://dev.pixidium.net/rest/categories-listing/", requestOptions)
+   fetch("https://www.pixidium.net/rest/categories-listing/", requestOptions)
       .then(response => {
          return response.json()
       }

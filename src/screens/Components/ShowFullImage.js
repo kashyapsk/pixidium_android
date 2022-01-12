@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'rgba(0,0,0,0.97)',
   },
   imageStyle: {
      
@@ -220,7 +220,7 @@ console.log(imageURL)
          height={240}
          width={width - 60}
          play={true}
-         videoId={'PIrWquI_mQ0'}
+         videoId={selectedYoutubeFile}
          onChangeState={even => {
            console.log(
              'current state of youyube player = ' + even,
