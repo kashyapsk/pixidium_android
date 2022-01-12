@@ -96,7 +96,7 @@ export default class Wallet extends Component {
          
       };
       console.log(requestOptions)
-       fetch("https://dev.pixidium.net/rest/api/wallet-dashboard/", requestOptions)
+       fetch("https://www.pixidium.net/rest/api/wallet-dashboard/", requestOptions)
           .then(response => {
              return response.json()
           }
@@ -137,7 +137,7 @@ export default class Wallet extends Component {
            
         };
         console.log(requestOptions)
-         fetch("https://dev.pixidium.net/rest/api/convert-bonus-to-cash/", requestOptions)
+         fetch("https://www.pixidium.net/rest/api/convert-bonus-to-cash/", requestOptions)
             .then(response => {
                return response.json()
             }
@@ -168,7 +168,7 @@ export default class Wallet extends Component {
            
         };
         console.log(requestOptions)
-         fetch("https://dev.pixidium.net/rest/api/withdraw-cash/", requestOptions)
+         fetch("https://www.pixidium.net/rest/api/withdraw-cash/", requestOptions)
             .then(response => {
                return response.json()
             }

@@ -132,7 +132,7 @@ export default class Profile extends Component {
       },
     };
     console.log(requestOptions);
-    fetch('https://dev.pixidium.net/rest/profile/', requestOptions)
+    fetch('https://www.pixidium.net/rest/profile/', requestOptions)
       .then(response => {
         return response.json();
       })
@@ -412,7 +412,7 @@ else{
     };
     console.log(JSON.stringify(parameters))
     console.log(requestOptions)
-     fetch("https://dev.pixidium.net/rest/api/update-profile/", requestOptions)
+     fetch("https://www.pixidium.net/rest/api/update-profile/", requestOptions)
         .then(response => {
            return response.json()
         }

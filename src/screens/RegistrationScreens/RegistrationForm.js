@@ -396,7 +396,7 @@ export default class RegistrationForm extends Component {
     };
     console.log(parameters)
     console.log(requestOptions)
-     fetch("https://dev.pixidium.net/rest/signup/", requestOptions)
+     fetch("https://www.pixidium.net/rest/signup/", requestOptions)
         .then(response => {
            return response.json()
         }

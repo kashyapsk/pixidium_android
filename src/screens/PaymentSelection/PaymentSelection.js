@@ -197,7 +197,7 @@ load = () =>{
                 },                   body: JSON.stringify(params),
                  };
                  console.log(requestOptions);
-                 fetch('https://dev.pixidium.net/rest/campaigns-payment/', requestOptions)
+                 fetch('https://www.pixidium.net/rest/campaigns-payment/', requestOptions)
                    .then(response => {
                      return response.json();
                    })
