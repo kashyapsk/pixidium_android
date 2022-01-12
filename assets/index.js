@@ -39,6 +39,7 @@ export default images={
     'phone_call':require('../assets/phone-call.png'),
     'map':require('../assets/map.png'),
 
- 
+    'clip_board':require('../assets/clip_board.png'),
+
 
 }
