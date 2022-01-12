@@ -25,6 +25,8 @@ import SetPasscode from '../Wallet/SetPasscode';
 import Appcolor from '../../../Appcolor';
 import {getUserType,getAccessToken} from '../../Utilities/LocalStorage'
 import SmartLoader from '../Components/SmartLoader';
+
+
 const Tab = createBottomTabNavigator();
 Stack = createStackNavigator()
 
@@ -43,6 +45,7 @@ constructor(props)
 
 componentDidMount()
 {
+  
   
   getUserType().then((type)=>{
     this.setState({
@@ -105,7 +108,7 @@ this.load()
      
   };
   console.log(requestOptions)
-   fetch("https://dev.pixidium.net/rest/notifications/", requestOptions)
+   fetch("https://www.pixidium.net/rest/notifications/", requestOptions)
       .then(response => {
          return response.json()
       }
