@@ -1,4 +1,4 @@
-package com.test;
+package com.pyxidium.app;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,6 +8,9 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
  
