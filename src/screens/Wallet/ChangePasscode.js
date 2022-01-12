@@ -97,7 +97,7 @@ console.log(this.state.newPasscode)
     body: formData,
   };
   console.log(requestOptions);
-  fetch('https://dev.pixidium.net/rest/passcode/change_passcode/', requestOptions)
+  fetch('https://www.pixidium.net/rest/passcode/change_passcode/', requestOptions)
     .then(response => {
       return response.json();
     })

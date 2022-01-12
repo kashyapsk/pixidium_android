@@ -123,7 +123,7 @@ export default class PasscodeVerification extends Component {
            
         };
         console.log(requestOptions);
-        fetch('https://dev.pixidium.net/rest/passcode/check_passcode/', requestOptions)
+        fetch('https://www.pixidium.net/rest/passcode/check_passcode/', requestOptions)
           .then(response => {
             return response.json();
           })
@@ -174,7 +174,7 @@ export default class PasscodeVerification extends Component {
           body: formData,
         };
         console.log(requestOptions);
-        fetch('https://dev.pixidium.net/rest/passcode/verify_passcode/', requestOptions)
+        fetch('https://www.pixidium.net/rest/passcode/verify_passcode/', requestOptions)
           .then(response => {
             return response.json();
           })

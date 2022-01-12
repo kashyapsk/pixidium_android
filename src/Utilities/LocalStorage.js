@@ -25,6 +25,33 @@ export async function saveAccessToken (token){
 }; 
 
 
+export async function getFCMToken ()  {
+  try {
+    const token = await AsyncStorage.getItem('fcmtoken');
+    if (token !== null) {
+      // We have data!!
+      console.log('data get done fcmtoken')
+      console.log(JSON.stringify(token));
+      return token
+    }
+  } catch (error) {
+    console.log('token expired')
+    // Error retrieving data
+  }
+};
+
+export async function saveFCMToken (token){
+  try {
+    await AsyncStorage.setItem(
+      'fcmtoken',
+      token
+    );
+  } catch (error) {
+    // Error saving data
+  }
+}; 
+
+
 export async function getAccessToken ()  {
   try {
     const token = await AsyncStorage.getItem('token');
