@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "71038749812",
-    "project_id": "speechtextdemo-31150",
-    "storage_bucket": "speechtextdemo-31150.appspot.com"
+    "project_number": "316624906994",
+    "project_id": "pyxidium-488c9",
+    "storage_bucket": "pyxidium-488c9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:71038749812:android:77ceaab4480ecf9caa1521",
+        "mobilesdk_app_id": "1:316624906994:android:4ea507a538a76986a13e6b",
         "android_client_info": {
-          "package_name": "com.test"
+          "package_name": "com.pyxidium.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "71038749812-uigv35nbf84upl66rkt8h9c2d8kl9jt2.apps.googleusercontent.com",
+          "client_id": "316624906994-vfrqqsb4a183romil4jmkol3hkjq7k11.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLOpnUtY50I1qFqL3ueQvE5JSbOYZpkXo"
+          "current_key": "AIzaSyCH6ivsExt0fJTs__mqAq7VBkIpEVa7MUw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "71038749812-uigv35nbf84upl66rkt8h9c2d8kl9jt2.apps.googleusercontent.com",
+              "client_id": "316624906994-vfrqqsb4a183romil4jmkol3hkjq7k11.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "316624906994-6q374u58p0rjmjcvmb56m8odmdbinp7f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Pixidium.app"
+              }
             }
           ]
         }
